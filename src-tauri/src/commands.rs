@@ -143,7 +143,7 @@ pub fn hide_window(app: AppHandle) {
 }
 
 #[tauri::command]
-pub fn open_settings(app: AppHandle) {
+pub async fn open_settings(app: AppHandle) {
     window::open_settings(&app);
 }
 
