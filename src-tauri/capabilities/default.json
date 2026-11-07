@@ -1,0 +1,10 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Права интерфейса: события, IPC к собственным командам и выбор папки в настройках. Всё остальное (процессы, буфер обмена, хоткеи) делает только Rust.",
+  "windows": ["main", "settings"],
+  "permissions": [
+    "core:default",
+    "dialog:allow-open"
+  ]
+}

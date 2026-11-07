@@ -1,0 +1,15 @@
+{
+  "id": "web-search",
+  "name": "Поиск в интернете",
+  "version": "0.1.0",
+  "description": "Пример плагина, возвращающего список результатов (output: items). «ws запрос» → ссылки на поиск.",
+  "permissions": ["exec", "open"],
+  "commands": [
+    {
+      "keyword": "ws",
+      "title": "Искать в интернете",
+      "exec": ["node", "{plugin_dir}/search.mjs", "{query}"],
+      "output": "items"
+    }
+  ]
+}

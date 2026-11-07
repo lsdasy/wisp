@@ -1,0 +1,28 @@
+{
+  "id": "docker",
+  "name": "Docker",
+  "version": "0.1.0",
+  "description": "Список контейнеров и образов. Нужен установленный Docker.",
+  "permissions": ["exec"],
+  "commands": [
+    {
+      "keyword": "dps",
+      "title": "Docker: запущенные контейнеры",
+      "exec": ["docker", "ps", "--format", "table {{.Names}}\t{{.Status}}\t{{.Ports}}"],
+      "output": "text"
+    },
+    {
+      "keyword": "dimg",
+      "title": "Docker: образы",
+      "exec": ["docker", "images"],
+      "output": "text"
+    },
+    {
+      "keyword": "dlogs",
+      "title": "Docker: логи контейнера (dlogs <имя>)",
+      "exec": ["docker", "logs", "--tail", "100", "{args}"],
+      "output": "text",
+      "timeoutSecs": 20
+    }
+  ]
+}
