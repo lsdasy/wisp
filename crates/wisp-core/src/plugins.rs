@@ -321,7 +321,7 @@ impl PluginHost {
         let mut proc = platform::program_command(&argv[0]);
         proc.args(&argv[1..])
             .current_dir(&dir)
-            .env("LUMEN_QUERY", args_str);
+            .env("WISP_QUERY", args_str);
         let timeout = Duration::from_secs(cmd.timeout_secs.unwrap_or(15).clamp(1, 60));
         let out = run_captured(proc, timeout).await?;
 

@@ -1,9 +1,9 @@
 //! Команды, которые вызывает интерфейс через `invoke`.
-//! Тонкий слой: вся логика — в `lumen-core`, здесь только то, что связано с окнами и ОС-интеграцией Tauri.
+//! Тонкий слой: вся логика — в `wisp-core`, здесь только то, что связано с окнами и ОС-интеграцией Tauri.
 
 use crate::{AppState, hotkeys, window};
-use lumen_core::plugins::PluginInfo;
-use lumen_core::{Error, ExecOutcome, InternalAction, SearchResponse, Settings, engine::Status};
+use wisp_core::plugins::PluginInfo;
+use wisp_core::{Error, ExecOutcome, InternalAction, SearchResponse, Settings, engine::Status};
 use serde::Serialize;
 use std::sync::atomic::Ordering;
 use tauri::{AppHandle, Emitter, Manager, State};
@@ -100,7 +100,7 @@ pub fn save_settings(
         }
     }
     let saved = state.engine.update_settings(settings)?;
-    let _ = app.emit("lumen://settings-changed", &saved);
+    let _ = app.emit("wisp://settings-changed", &saved);
     Ok(saved)
 }
 
@@ -129,7 +129,7 @@ pub fn reload_plugins(state: State<'_, AppState>) -> Vec<PluginInfo> {
 pub fn open_plugins_dir(state: State<'_, AppState>) -> CmdResult<()> {
     let dir = std::path::PathBuf::from(state.engine.status().plugins_dir);
     std::fs::create_dir_all(&dir)?;
-    lumen_core::platform::open_path(&dir)
+    wisp_core::platform::open_path(&dir)
 }
 
 #[tauri::command]

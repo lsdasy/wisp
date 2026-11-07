@@ -57,7 +57,7 @@ fn builtins() -> Vec<Builtin> {
         },
         Builtin {
             id: "settings",
-            title: "Настройки Lumen",
+            title: "Настройки Wisp",
             keywords: &["settings", "preferences", "параметры"],
             action: int(I::OpenSettings),
         },
@@ -69,7 +69,7 @@ fn builtins() -> Vec<Builtin> {
         },
         Builtin {
             id: "quit",
-            title: "Выйти из Lumen",
+            title: "Выйти из Wisp",
             keywords: &["quit", "exit", "закрыть"],
             action: int(I::Quit),
         },
@@ -79,7 +79,7 @@ fn builtins() -> Vec<Builtin> {
 fn builtin_item(b: &Builtin, score: u32) -> SearchItem {
     let (danger, subtitle) = match &b.action {
         Action::System { action } => (action.is_dangerous(), "Система"),
-        _ => (false, "Lumen"),
+        _ => (false, "Wisp"),
     };
     SearchItem {
         id: format!("cmd:{}", b.id),

@@ -1,26 +1,26 @@
 #!/usr/bin/env bash
-# Установщик Lumen для macOS (и Linux — AppImage).
+# Установщик Wisp для macOS (и Linux — AppImage).
 #
 #   Последний релиз:
-#     curl -fsSL https://raw.githubusercontent.com/lsdasy/lumen/main/install.sh | bash
+#     curl -fsSL https://raw.githubusercontent.com/lsdasy/wisp/main/install.sh | bash
 #
 #   С параметрами:
-#     curl -fsSL https://raw.githubusercontent.com/lsdasy/lumen/main/install.sh | bash -s -- --source
+#     curl -fsSL https://raw.githubusercontent.com/lsdasy/wisp/main/install.sh | bash -s -- --source
 #     ./install.sh --version v0.1.0
 #
 #   Параметры:
-#     --repo owner/name   репозиторий (по умолчанию lsdasy/lumen или $LUMEN_REPO)
+#     --repo owner/name   репозиторий (по умолчанию lsdasy/wisp или $WISP_REPO)
 #     --version TAG       тег релиза (по умолчанию latest)
 #     --source            собрать из исходников (нужны git, cargo, node 18+, Xcode CLT)
 #     --branch NAME       ветка для --source (main)
-#     --dir PATH          куда клонировать для --source (~/.lumen/src)
+#     --dir PATH          куда клонировать для --source (~/.wisp/src)
 set -euo pipefail
 
-REPO="${LUMEN_REPO:-lsdasy/lumen}"
+REPO="${WISP_REPO:-lsdasy/wisp}"
 VERSION="latest"
 FROM_SOURCE=0
 BRANCH="main"
-SRC_DIR="${HOME}/.lumen/src"
+SRC_DIR="${HOME}/.wisp/src"
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -88,7 +88,7 @@ install_release() {
 
   step "Ищу релиз ${VERSION} в ${REPO}"
   local json
-  json="$(curl -fsSL -H 'User-Agent: lumen-installer' -H 'Accept: application/vnd.github+json' ${CURL_AUTH[@]+"${CURL_AUTH[@]}"} "$api")" \
+  json="$(curl -fsSL -H 'User-Agent: wisp-installer' -H 'Accept: application/vnd.github+json' ${CURL_AUTH[@]+"${CURL_AUTH[@]}"} "$api")" \
     || fail "Релиз не найден. Проверь, что есть опубликованный Release, или запусти с --source."
   local tag
   tag="$(printf '%s' "$json" | grep -m1 '"tag_name"' | sed -E 's/.*"tag_name": *"([^"]+)".*/\1/')"
@@ -100,7 +100,7 @@ install_release() {
 
   local url=""
   if [[ "$PLATFORM" == macos ]]; then
-    # Tauri: Lumen_0.1.0_aarch64.dmg / Lumen_0.1.0_x64.dmg / Lumen_0.1.0_universal.dmg
+    # Tauri: Wisp_0.1.0_aarch64.dmg / Wisp_0.1.0_x64.dmg / Wisp_0.1.0_universal.dmg
     url="$(printf '%s\n' "$urls" | grep -E "_${ARCH_TAG}\.dmg$" | head -n1 || true)"
     [[ -z "$url" ]] && url="$(printf '%s\n' "$urls" | grep -E "_universal\.dmg$" | head -n1 || true)"
   else
@@ -112,14 +112,14 @@ install_release() {
   name="$(basename "$url")"
   file="${TMP}/${name}"
   step "Скачиваю ${name}"
-  curl -fL --progress-bar -H 'User-Agent: lumen-installer' -o "$file" "$url"
+  curl -fL --progress-bar -H 'User-Agent: wisp-installer' -o "$file" "$url"
 
   local sums_url
   sums_url="$(printf '%s\n' "$urls" | grep -E '/SHA256SUMS(\.txt)?$' | head -n1 || true)"
   if [[ -n "$sums_url" ]]; then
     step "Проверяю SHA-256"
     local expected actual
-    expected="$(curl -fsSL -H 'User-Agent: lumen-installer' "$sums_url" | grep -F "$name" | awk '{print tolower($1)}' | head -n1)"
+    expected="$(curl -fsSL -H 'User-Agent: wisp-installer' "$sums_url" | grep -F "$name" | awk '{print tolower($1)}' | head -n1)"
     [[ -z "$expected" ]] && fail "${name} не найден в SHA256SUMS."
     actual="$(sha256 "$file")"
     [[ "$expected" == "$actual" ]] || fail "Контрольная сумма не совпала — файл повреждён или подменён."
@@ -141,10 +141,10 @@ install_release() {
   else
     step "Устанавливаю AppImage"
     mkdir -p "${HOME}/.local/bin"
-    install -m 755 "$file" "${HOME}/.local/bin/lumen"
-    ok "Установлено в ~/.local/bin/lumen"
+    install -m 755 "$file" "${HOME}/.local/bin/wisp"
+    ok "Установлено в ~/.local/bin/wisp"
   fi
-  ok "Lumen ${tag} установлен."
+  ok "Wisp ${tag} установлен."
 }
 
 # ---------------------------------------------------------------------------
@@ -196,11 +196,11 @@ install_source() {
     img="$(find target/release/bundle/appimage -maxdepth 1 -name '*.AppImage' | head -n1)"
     [[ -z "$img" ]] && fail "Сборка прошла, но AppImage не найден."
     mkdir -p "${HOME}/.local/bin"
-    install -m 755 "$img" "${HOME}/.local/bin/lumen"
-    ok "Установлено в ~/.local/bin/lumen"
+    install -m 755 "$img" "${HOME}/.local/bin/wisp"
+    ok "Установлено в ~/.local/bin/wisp"
   fi
-  ok "Lumen собран и установлен из исходников."
+  ok "Wisp собран и установлен из исходников."
 }
 
-printf '\n  Lumen installer\n  репозиторий: %s\n\n' "$REPO"
+printf '\n  Wisp installer\n  репозиторий: %s\n\n' "$REPO"
 if (( FROM_SOURCE )); then install_source; else install_release; fi

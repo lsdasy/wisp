@@ -14,8 +14,8 @@
   --danger: #ff9585;
   --danger-bg: rgba(255, 120, 100, 0.14);
   --ok: #7dd3a8;
-  --accent: #8aa4ff;
-  --track: #5b78e6;
+  --accent: #7ed6ec;
+  --track: #1f7f99;
   --track-off: rgba(255, 255, 255, 0.18);
   --radius: 14px;
   color-scheme: dark;
@@ -35,8 +35,8 @@
   --danger: #b23a26;
   --danger-bg: rgba(200, 70, 40, 0.1);
   --ok: #1d7a4c;
-  --accent: #3550c8;
-  --track: #3550c8;
+  --accent: #0f7894;
+  --track: #0f7894;
   --track-off: rgba(0, 0, 0, 0.2);
   color-scheme: light;
 }

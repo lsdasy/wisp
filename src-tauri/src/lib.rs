@@ -1,19 +1,19 @@
 //! Слой приложения Tauri: окна, трей, горячие клавиши, автозапуск.
-//! Логика поиска и выполнения — в `lumen-core`.
+//! Логика поиска и выполнения — в `wisp-core`.
 
 mod commands;
 mod hotkeys;
 mod tray;
 mod window;
 
-use lumen_core::Engine;
-use lumen_core::settings::Theme;
+use wisp_core::Engine;
+use wisp_core::settings::Theme;
 use std::sync::Arc;
 use std::sync::atomic::AtomicBool;
 use tauri::{Manager, WindowEvent};
 use tauri_plugin_autostart::MacosLauncher;
 
-/// Аргумент, с которым Lumen запускается из автозагрузки: стартует свернутым в трей.
+/// Аргумент, с которым Wisp запускается из автозагрузки: стартует свернутым в трей.
 const HIDDEN_ARG: &str = "--hidden";
 
 pub struct AppState {
@@ -113,5 +113,5 @@ pub fn run() {
             commands::set_effective_theme,
         ])
         .run(tauri::generate_context!())
-        .expect("не удалось запустить Lumen");
+        .expect("не удалось запустить Wisp");
 }

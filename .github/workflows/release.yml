@@ -54,7 +54,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tagName: ${{ github.ref_name }}
-          releaseName: "Lumen ${{ github.ref_name }}"
+          releaseName: "Wisp ${{ github.ref_name }}"
           releaseBody: |
             **Windows:** `irm https://raw.githubusercontent.com/${{ github.repository }}/main/install.ps1 | iex`
             **macOS / Linux:** `curl -fsSL https://raw.githubusercontent.com/${{ github.repository }}/main/install.sh | bash`

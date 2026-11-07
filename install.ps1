@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Установщик Lumen для Windows.
+    Установщик Wisp для Windows.
 
 .DESCRIPTION
     Два режима:
@@ -11,22 +11,22 @@
 
 .EXAMPLE
     # Одной строкой (последний релиз):
-    irm https://raw.githubusercontent.com/lsdasy/lumen/main/install.ps1 | iex
+    irm https://raw.githubusercontent.com/lsdasy/wisp/main/install.ps1 | iex
 
 .EXAMPLE
     # С параметрами (через scriptblock, т.к. "| iex" параметры не принимает):
-    & ([scriptblock]::Create((irm https://raw.githubusercontent.com/lsdasy/lumen/main/install.ps1))) -FromSource
+    & ([scriptblock]::Create((irm https://raw.githubusercontent.com/lsdasy/wisp/main/install.ps1))) -FromSource
 
 .EXAMPLE
     .\install.ps1 -Version v0.2.0 -Silent
 #>
 [CmdletBinding()]
 param(
-    [string]$Repo       = $(if ($env:LUMEN_REPO) { $env:LUMEN_REPO } else { "lsdasy/lumen" }),
+    [string]$Repo       = $(if ($env:WISP_REPO) { $env:WISP_REPO } else { "lsdasy/wisp" }),
     [string]$Version    = "latest",          # тег релиза, например v0.1.0
     [switch]$FromSource,                     # собрать из исходников вместо скачивания релиза
     [string]$Branch     = "main",
-    [string]$InstallDir = "$env:LOCALAPPDATA\Lumen\src",   # куда клонировать при -FromSource
+    [string]$InstallDir = "$env:LOCALAPPDATA\Wisp\src",   # куда клонировать при -FromSource
     [switch]$Silent                          # тихая установка (NSIS /S, MSI /qn)
 )
 
@@ -40,7 +40,7 @@ function Fail($msg)       { Write-Host "  ✗ $msg" -ForegroundColor Red; exit 1
 
 function Test-Command($name) { [bool](Get-Command $name -ErrorAction SilentlyContinue) }
 
-$Headers = @{ "User-Agent" = "lumen-installer"; "Accept" = "application/vnd.github+json" }
+$Headers = @{ "User-Agent" = "wisp-installer"; "Accept" = "application/vnd.github+json" }
 if ($env:GITHUB_TOKEN) { $Headers["Authorization"] = "Bearer $env:GITHUB_TOKEN" }  # для приватного репо / лимитов API
 
 # ---------------------------------------------------------------------------
@@ -65,26 +65,26 @@ function Install-FromRelease {
         if ($env:PROCESSOR_ARCHITECTURE -eq "ARM64") { "arm64" } else { "x64" }
     } else { "x86" }
 
-    # Tauri называет файлы примерно так: Lumen_0.1.0_x64-setup.exe, Lumen_0.1.0_x64_en-US.msi
+    # Tauri называет файлы примерно так: Wisp_0.1.0_x64-setup.exe, Wisp_0.1.0_x64_en-US.msi
     $assets = $release.assets
     $asset  = $assets | Where-Object { $_.name -match "_$arch-setup\.exe$" } | Select-Object -First 1
     if (-not $asset) { $asset = $assets | Where-Object { $_.name -match "_$arch.*\.msi$" } | Select-Object -First 1 }
     if (-not $asset) { $asset = $assets | Where-Object { $_.name -match "\.(exe|msi)$" } | Select-Object -First 1 }
     if (-not $asset) { Fail "В релизе нет установщика для Windows ($arch)." }
 
-    $tmp  = Join-Path $env:TEMP "lumen-install"
+    $tmp  = Join-Path $env:TEMP "wisp-install"
     New-Item -ItemType Directory -Force -Path $tmp | Out-Null
     $file = Join-Path $tmp $asset.name
 
     Write-Step "Скачиваю $($asset.name) ($([math]::Round($asset.size / 1MB, 1)) МБ)"
-    Invoke-WebRequest -Uri $asset.browser_download_url -OutFile $file -Headers @{ "User-Agent" = "lumen-installer" }
+    Invoke-WebRequest -Uri $asset.browser_download_url -OutFile $file -Headers @{ "User-Agent" = "wisp-installer" }
     Write-Ok "Скачано"
 
     # Проверка целостности, если в релизе есть SHA256SUMS(.txt)
     $sums = $assets | Where-Object { $_.name -match "^SHA256SUMS" } | Select-Object -First 1
     if ($sums) {
         Write-Step "Проверяю SHA-256"
-        $sumsText = (Invoke-WebRequest -Uri $sums.browser_download_url -Headers @{ "User-Agent" = "lumen-installer" } -UseBasicParsing).Content
+        $sumsText = (Invoke-WebRequest -Uri $sums.browser_download_url -Headers @{ "User-Agent" = "wisp-installer" } -UseBasicParsing).Content
         if ($sumsText -is [byte[]]) { $sumsText = [Text.Encoding]::UTF8.GetString($sumsText) }
         $line = ($sumsText -split "`n") | Where-Object { $_ -match [regex]::Escape($asset.name) } | Select-Object -First 1
         if (-not $line) { Fail "Файл $($asset.name) не найден в $($sums.name)." }
@@ -110,7 +110,7 @@ function Install-FromRelease {
     if ($p.ExitCode -ne 0) { Fail "Установщик завершился с кодом $($p.ExitCode)." }
 
     Remove-Item $tmp -Recurse -Force -ErrorAction SilentlyContinue
-    Write-Ok "Lumen $($release.tag_name) установлен. Открывай по Alt + Space."
+    Write-Ok "Wisp $($release.tag_name) установлен. Открывай по Alt + Space."
 }
 
 # ---------------------------------------------------------------------------
@@ -165,14 +165,14 @@ function Install-FromSource {
             Start-Process -FilePath $bundle.FullName -Wait -PassThru
         }
         if ($p.ExitCode -ne 0) { Fail "Установщик завершился с кодом $($p.ExitCode)." }
-        Write-Ok "Lumen собран и установлен из исходников."
+        Write-Ok "Wisp собран и установлен из исходников."
     } finally {
         Pop-Location
     }
 }
 
 Write-Host ""
-Write-Host "  Lumen installer" -ForegroundColor White
+Write-Host "  Wisp installer" -ForegroundColor White
 Write-Host "  репозиторий: $Repo" -ForegroundColor DarkGray
 Write-Host ""
 

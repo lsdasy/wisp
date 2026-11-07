@@ -89,7 +89,7 @@ export function SettingsApp() {
             {message.text}
           </div>
         )}
-        <div className="version">Lumen {info?.version}</div>
+        <div className="version">Wisp {info?.version}</div>
       </nav>
 
       <main className="settings-pane">
@@ -110,7 +110,7 @@ function General({ s, update, platform }: TabProps & { platform: string }) {
     <>
       <h2>Общие</h2>
       <p className="lead">Вызов окна, тема и поведение при запуске.</p>
-      <Row title="Горячая клавиша" desc="Открывает Lumen поверх всех окон. Нажмите на поле и введите сочетание.">
+      <Row title="Горячая клавиша" desc="Открывает Wisp поверх всех окон. Нажмите на поле и введите сочетание.">
         <HotkeyInput value={s.hotkey} onChange={(hotkey) => update({ hotkey })} platform={platform} />
       </Row>
       <Row title="Тема" desc="«Системная» следует настройкам Windows / macOS">
@@ -125,7 +125,7 @@ function General({ s, update, platform }: TabProps & { platform: string }) {
           ]}
         />
       </Row>
-      <ToggleRow title="Запускать вместе с системой" desc="Lumen стартует свёрнутым в трей" checked={s.autostart} onChange={(autostart) => update({ autostart })} />
+      <ToggleRow title="Запускать вместе с системой" desc="Wisp стартует свёрнутым в трей" checked={s.autostart} onChange={(autostart) => update({ autostart })} />
       <ToggleRow title="Прятать окно при потере фокуса" checked={s.hideOnBlur} onChange={(hideOnBlur) => update({ hideOnBlur })} />
       <ToggleRow title="Анимации" desc="Плавное появление и скрытие окна" checked={s.animations} onChange={(animations) => update({ animations })} />
     </>
@@ -299,7 +299,7 @@ function Commands({ s, update }: TabProps) {
         </label>
         <label className="wide">
           Команда, путь или ссылка
-          <input className="input mono" placeholder="git -C C:\Projects\lumen status" value={draft.command} onChange={(e) => setDraft({ ...draft, command: e.target.value })} />
+          <input className="input mono" placeholder="git -C C:\Projects\wisp status" value={draft.command} onChange={(e) => setDraft({ ...draft, command: e.target.value })} />
         </label>
         <label className="check">
           <input type="checkbox" checked={draft.shell} onChange={(e) => setDraft({ ...draft, shell: e.target.checked })} />
@@ -396,7 +396,7 @@ function Security({ s, update }: TabProps) {
   return (
     <>
       <h2>Безопасность</h2>
-      <p className="lead">Что Lumen делает без вашего подтверждения. Пароли и токены Lumen не хранит.</p>
+      <p className="lead">Что Wisp делает без вашего подтверждения. Пароли и токены Wisp не хранит.</p>
       <ToggleRow
         title="Подтверждать опасные операции"
         desc="Выключение, перезагрузка, очистка корзины, команды вроде rm / Remove-Item — только после второго Enter"

@@ -1,5 +1,5 @@
 [package]
-name = "lumen"
+name = "wisp"
 version = "0.1.0"
 description = "Универсальный лаунчер в стиле Raycast / PowerToys Run"
 authors = ["lsdasy"]
@@ -8,12 +8,12 @@ edition = "2024"
 rust-version = "1.85"
 
 [lib]
-name = "lumen_app"
+name = "wisp_app"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [dependencies]
 log = "0.4.35"
-lumen-core = { path = "../crates/lumen-core" }
+wisp-core = { path = "../crates/wisp-core" }
 serde = { version = "1.0.229", features = ["derive"] }
 serde_json = "1.0.154"
 tauri = { version = "2.11.6", features = ["tray-icon", "macos-private-api"] }

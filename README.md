@@ -1,6 +1,6 @@
-# Lumen
+# Wisp
 
-Универсальный лаунчер для Windows и macOS в стиле Raycast и PowerToys Run. Нажимаете **Alt + Space**, вводите запрос, Lumen сам понимает, что нужно: открыть программу, найти файл, выполнить команду или посчитать выражение.
+Универсальный лаунчер для Windows и macOS в стиле Raycast и PowerToys Run. Нажимаете **Alt + Space**, вводите запрос, Wisp сам понимает, что нужно: открыть программу, найти файл, выполнить команду или посчитать выражение.
 
 Стек: **Rust** (ядро), **Tauri 2** (окно, трей, горячие клавиши), **React + TypeScript** (интерфейс), **SQLite** (история, избранное, настройки).
 
@@ -9,16 +9,16 @@
 **Windows** — в PowerShell:
 
 ```powershell
-irm https://raw.githubusercontent.com/lsdasy/lumen/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/lsdasy/wisp/main/install.ps1 | iex
 ```
 
 **macOS / Linux** — в терминале:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/lsdasy/lumen/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/lsdasy/wisp/main/install.sh | bash
 ```
 
-Скрипт скачивает установщик из последнего [релиза](https://github.com/lsdasy/lumen/releases), сверяет SHA-256 и запускает его. Можно и вручную: `*-setup.exe` для Windows, `*.dmg` для macOS.
+Скрипт скачивает установщик из последнего [релиза](https://github.com/lsdasy/wisp/releases), сверяет SHA-256 и запускает его. Можно и вручную: `*-setup.exe` для Windows, `*.dmg` для macOS.
 
 Параметры:
 
@@ -31,19 +31,19 @@ curl -fsSL https://raw.githubusercontent.com/lsdasy/lumen/main/install.sh | bash
 Передать параметры при установке одной строкой (Windows):
 
 ```powershell
-& ([scriptblock]::Create((irm https://raw.githubusercontent.com/lsdasy/lumen/main/install.ps1))) -FromSource
+& ([scriptblock]::Create((irm https://raw.githubusercontent.com/lsdasy/wisp/main/install.ps1))) -FromSource
 ```
 
-> Сборки пока не подписаны сертификатом. Windows SmartScreen покажет предупреждение: «Подробнее» → «Выполнить в любом случае». macOS при установке через браузер скажет, что разработчик не проверен: правый клик по Lumen.app → «Открыть». Через `install.sh` такого предупреждения нет.
+> Сборки пока не подписаны сертификатом. Windows SmartScreen покажет предупреждение: «Подробнее» → «Выполнить в любом случае». macOS при установке через браузер скажет, что разработчик не проверен: правый клик по Wisp.app → «Открыть». Через `install.sh` такого предупреждения нет.
 
-Удаление: Windows — «Параметры → Приложения → Lumen → Удалить»; macOS — перетащить `Lumen.app` из «Программ» в корзину.
+Удаление: Windows — «Параметры → Приложения → Wisp → Удалить»; macOS — перетащить `Wisp.app` из «Программ» в корзину.
 
 ## Что умеет
 
 | Ввод | Результат |
 |---|---|
 | `vsc`, `tlg` | приложения (нечёткий поиск, по первым буквам слов) |
-| `code -- C:\Projects\lumen` | запуск приложения с аргументами (всё после ` -- `) |
+| `code -- C:\Projects\wisp` | запуск приложения с аргументами (всё после ` -- `) |
 | `отчёт`, `main.rs` | файлы и папки из индексируемых папок |
 | `.pdf` | все файлы с расширением |
 | `sqrt(144) * 3 + 15%` | калькулятор; Enter копирует ответ |
@@ -65,7 +65,7 @@ curl -fsSL https://raw.githubusercontent.com/lsdasy/lumen/main/install.sh | bash
 ```bash
 npm install
 npm run tauri dev      # запуск с горячей перезагрузкой интерфейса
-cargo test -p lumen-core   # тесты ядра
+cargo test -p wisp-core   # тесты ядра
 npm run tauri build    # установщики → target/release/bundle/
 ```
 
@@ -78,8 +78,8 @@ npm run tauri build    # установщики → target/release/bundle/
 ## Архитектура
 
 ```
-lumen/
-├── crates/lumen-core/      ядро без UI — тестируется обычным cargo test
+wisp/
+├── crates/wisp-core/      ядро без UI — тестируется обычным cargo test
 │   └── src/
 │       ├── engine.rs       core: разбор запроса, опрос провайдеров, кэш, выполнение
 │       ├── matcher.rs      search: нечёткое сравнение
@@ -105,7 +105,7 @@ lumen/
 
 ## Плагины
 
-Плагин — папка в каталоге данных Lumen (`Настройки → Расширения → Открыть папку плагинов`) с файлом `plugin.json`:
+Плагин — папка в каталоге данных Wisp (`Настройки → Расширения → Открыть папку плагинов`) с файлом `plugin.json`:
 
 ```json
 {

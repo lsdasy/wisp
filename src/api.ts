@@ -1,4 +1,4 @@
-// Типы повторяют сериализацию из crates/lumen-core (serde, camelCase).
+// Типы повторяют сериализацию из crates/wisp-core (serde, camelCase).
 // Если меняете структуру в Rust — поменяйте и здесь.
 
 import { invoke } from "@tauri-apps/api/core";
@@ -124,9 +124,9 @@ export const api = {
 };
 
 export const EVENTS = {
-  shown: "lumen://shown",
-  hideRequested: "lumen://hide-requested",
-  settingsChanged: "lumen://settings-changed",
+  shown: "wisp://shown",
+  hideRequested: "wisp://hide-requested",
+  settingsChanged: "wisp://settings-changed",
 } as const;
 
 export function errorText(e: unknown): string {

@@ -2207,45 +2207,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5d15f86d12da44cd8d4ec3c73984537eb7f4cadcb9776a575a0a8a05ca11005c"
 
 [[package]]
-name = "lumen"
-version = "0.1.0"
-dependencies = [
- "log",
- "lumen-core",
- "serde",
- "serde_json",
- "tauri",
- "tauri-build",
- "tauri-plugin-autostart",
- "tauri-plugin-clipboard-manager",
- "tauri-plugin-dialog",
- "tauri-plugin-global-shortcut",
- "tauri-plugin-log",
- "tauri-plugin-single-instance",
- "window-vibrancy 0.8.1",
-]
-
-[[package]]
-name = "lumen-core"
-version = "0.1.0"
-dependencies = [
- "dirs 7.0.0",
- "log",
- "notify",
- "notify-debouncer-mini",
- "open",
- "rusqlite",
- "serde",
- "serde_json",
- "shlex",
- "tempfile",
- "thiserror 2.0.21",
- "tokio",
- "walkdir",
- "windows-sys 0.61.2",
-]
-
-[[package]]
 name = "markup5ever"
 version = "0.38.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2412,9 +2373,9 @@ dependencies = [
 
 [[package]]
 name = "notify-types"
-version = "2.2.0"
+version = "2.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0a437a9308232ce794b1e7fdf540d38ea37efc3c73492640c13b4c8568b8f108"
+checksum = "42b8cfee0e339a0337359f3c88165702ac6e600dc01c0cc9579a92d62b08477a"
 dependencies = [
  "bitflags 2.13.2",
 ]
@@ -5466,6 +5427,45 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7d6f32a0ff4a9f6f01231eb2059cc85479330739333e0e58cadf03b6af2cca10"
 dependencies = [
  "cfg-if",
+ "windows-sys 0.61.2",
+]
+
+[[package]]
+name = "wisp"
+version = "0.1.0"
+dependencies = [
+ "log",
+ "serde",
+ "serde_json",
+ "tauri",
+ "tauri-build",
+ "tauri-plugin-autostart",
+ "tauri-plugin-clipboard-manager",
+ "tauri-plugin-dialog",
+ "tauri-plugin-global-shortcut",
+ "tauri-plugin-log",
+ "tauri-plugin-single-instance",
+ "window-vibrancy 0.8.1",
+ "wisp-core",
+]
+
+[[package]]
+name = "wisp-core"
+version = "0.1.0"
+dependencies = [
+ "dirs 7.0.0",
+ "log",
+ "notify",
+ "notify-debouncer-mini",
+ "open",
+ "rusqlite",
+ "serde",
+ "serde_json",
+ "shlex",
+ "tempfile",
+ "thiserror 2.0.21",
+ "tokio",
+ "walkdir",
  "windows-sys 0.61.2",
 ]
 

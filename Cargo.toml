@@ -1,6 +1,6 @@
 [workspace]
 resolver = "3"
-members = ["crates/lumen-core", "src-tauri"]
+members = ["crates/wisp-core", "src-tauri"]
 
 [profile.release]
 # Лаунчер должен быть маленьким и быстро стартовать.

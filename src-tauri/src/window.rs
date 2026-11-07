@@ -15,7 +15,7 @@ pub fn main_window(app: &AppHandle) -> Option<WebviewWindow> {
 pub fn toggle(app: &AppHandle) {
     let Some(w) = main_window(app) else { return };
     if w.is_visible().unwrap_or(false) && w.is_focused().unwrap_or(false) {
-        let _ = w.emit("lumen://hide-requested", ());
+        let _ = w.emit("wisp://hide-requested", ());
     } else {
         show(app);
     }
@@ -27,7 +27,7 @@ pub fn show(app: &AppHandle) {
     let _ = w.show();
     let _ = w.unminimize();
     let _ = w.set_focus();
-    let _ = w.emit("lumen://shown", ());
+    let _ = w.emit("wisp://shown", ());
 }
 
 pub fn hide(app: &AppHandle) {
@@ -106,7 +106,7 @@ pub fn open_settings(app: &AppHandle) {
     }
     let built =
         WebviewWindowBuilder::new(app, SETTINGS, WebviewUrl::App("index.html#settings".into()))
-            .title("Настройки Lumen")
+            .title("Настройки Wisp")
             .inner_size(900.0, 620.0)
             .min_inner_size(720.0, 480.0)
             .center()

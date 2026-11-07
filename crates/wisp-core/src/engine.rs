@@ -22,7 +22,7 @@ use std::time::Duration;
 const CACHE_LIMIT: usize = 5_000;
 const SHELL_TIMEOUT: Duration = Duration::from_secs(30);
 
-/// Разделитель запроса и аргументов запуска: `code -- C:\Projects\lumen`.
+/// Разделитель запроса и аргументов запуска: `code -- C:\Projects\wisp`.
 pub const ARGS_SEPARATOR: &str = " -- ";
 
 pub fn split_query(raw: &str) -> (&str, Option<&str>) {
@@ -52,9 +52,9 @@ pub struct Engine {
 }
 
 impl Engine {
-    /// Открывает БД в `data_dir/lumen.db`, плагины ищет в `data_dir/plugins`.
+    /// Открывает БД в `data_dir/wisp.db`, плагины ищет в `data_dir/plugins`.
     pub fn open(data_dir: &Path) -> Result<Arc<Self>> {
-        let storage = Storage::open(&data_dir.join("lumen.db"))?;
+        let storage = Storage::open(&data_dir.join("wisp.db"))?;
         Ok(Self::with_storage(storage, data_dir.join("plugins")))
     }
 
@@ -75,7 +75,7 @@ impl Engine {
     pub fn start_background(self: &Arc<Self>) {
         let me = Arc::clone(self);
         std::thread::Builder::new()
-            .name("lumen-index".into())
+            .name("wisp-index".into())
             .spawn(move || {
                 me.plugins.reload();
                 me.apps.refresh();
@@ -531,11 +531,11 @@ mod tests {
     #[tokio::test]
     async fn shell_output_and_danger() {
         let e = engine();
-        let r = e.search("> echo lumen", 1);
+        let r = e.search("> echo wisp", 1);
         let id = r.sections[0].items[0].id.clone();
-        match e.execute(&id, false, "> echo lumen").await.unwrap() {
+        match e.execute(&id, false, "> echo wisp").await.unwrap() {
             ExecOutcome::Output { stdout, code, .. } => {
-                assert_eq!(stdout.trim(), "lumen");
+                assert_eq!(stdout.trim(), "wisp");
                 assert_eq!(code, Some(0));
             }
             o => panic!("{o:?}"),

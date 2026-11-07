@@ -255,7 +255,7 @@ export function Launcher() {
     );
 
   return (
-    <div className={`win ${shown ? "shown" : ""} ${settings?.animations === false ? "no-anim" : ""}`} role="dialog" aria-label="Lumen">
+    <div className={`win ${shown ? "shown" : ""} ${settings?.animations === false ? "no-anim" : ""}`} role="dialog" aria-label="Wisp">
       <div className="search">
         {mode.kind === "results" ? (
           <span className="search-icon">{Icon.search()}</span>
@@ -326,7 +326,7 @@ export function Launcher() {
         ) : (
           <>
             <span className="foot-group">
-              <span className="brand">{Icon.logo()} Lumen</span>
+              <span className="brand">{Icon.logo()} Wisp</span>
               {notice ? (
                 <span className={`notice ${notice.error ? "danger" : ""}`} role="status">
                   {notice.text}

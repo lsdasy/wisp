@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "Lumen",
+  "productName": "Wisp",
   "version": "0.1.0",
-  "identifier": "dev.lsdasy.lumen",
+  "identifier": "dev.lsdasy.wisp",
   "build": {
     "beforeDevCommand": "npm run dev",
     "devUrl": "http://localhost:1420",
@@ -14,7 +14,7 @@
     "windows": [
       {
         "label": "main",
-        "title": "Lumen",
+        "title": "Wisp",
         "width": 760,
         "height": 478,
         "resizable": false,
@@ -45,7 +45,7 @@
     ],
     "category": "Productivity",
     "shortDescription": "Лаунчер: приложения, файлы, команды и калькулятор по одной горячей клавише",
-    "longDescription": "Lumen — универсальный лаунчер в стиле Raycast и PowerToys Run: поиск приложений и файлов, системные команды, PowerShell/shell, калькулятор и расширения.",
+    "longDescription": "Wisp — универсальный лаунчер в стиле Raycast и PowerToys Run: поиск приложений и файлов, системные команды, PowerShell/shell, калькулятор и расширения.",
     "copyright": "© 2026 lsdasy",
     "publisher": "lsdasy",
     "windows": {
